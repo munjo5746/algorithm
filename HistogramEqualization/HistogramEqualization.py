@@ -59,6 +59,7 @@ class HistogramEqualization:
 		self.equalized = copyImg
 
 
+
 if __name__ == "__main__":
 	print "Equalizing..."
 	img = cv2.imread("test.jpg", 0)
