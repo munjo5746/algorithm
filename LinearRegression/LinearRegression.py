@@ -1,4 +1,4 @@
-
+import numpy as np
 
 class Regressor():
     def __init__(self, data):
@@ -20,6 +20,28 @@ class Regressor():
         for (x,y) in self.data:
             estimated = (slope * x) + yIntercept
             S += (y - estimated)**2
+        error = float(S)/N
+        return error
+
+    def computeGeneralSSD(self, partial, yIntercept):
+        """
+        This computes SSD in higher dimension.
+        """
+        if self.data is None:
+            print "No data!"
+            return
+
+        N = len(self.data[:, 0])
+        S = 0
+        error = 0
+        estimated = 0
+        temp = None
+
+        for v in self.data:
+            temp = v[ : len(v) - 1]
+            estimated = np.add(np.dot(partial, temp), yIntercept)
+            S += (v[len(v) - 1] - estimated)**2
+        print S, N
         error = float(S)/N
         return error
 

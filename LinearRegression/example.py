@@ -14,6 +14,7 @@ if __name__ == "__main__":
     # axis = fig.add_subplot(1,1,1)
     # axis.scatter(data[:,0], data[:,1], color="blue")
     # plt.show()
-    ins = linear(data)
-    newS, newY = ins.computeLocalMin(0, 0, 200)
-    print newS, newY
+
+    arr = np.array([[1,2,3], [3,4,5]])
+    ins = linear(arr)
+    ins.computeGeneralSSD(np.array([1,2]), np.array([3,4]))

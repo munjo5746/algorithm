@@ -16,7 +16,7 @@ def padwithtens(vector, pad_width, iaxis, kwargs):
 class adaptive_otsu():
 	"""implementation of otsu's thresh"""
 	def __init__(self, img=None):
-		
+
 		self.img = img
 		self.row, self.col = img.shape
 		# dictionary type.
@@ -64,7 +64,7 @@ class adaptive_otsu():
 		for prob in self.dist[1:k+1]:
 			u += intensity * prob
 			intensity += 1
-		# print "first moment : ", u		
+		# print "first moment : ", u
 		sigma = ((self.T * w - u)**2)/(w*(1-w))
 		return sigma
 
@@ -112,14 +112,14 @@ class adaptive_otsu():
 			else:
 				subimg = self.img[y : y + grid_number, x : x + grid_number]
 				opt = threshold_otsu(subimg)
-				img[y : y + grid_number, x : x + grid_number] = self.img[y : y + grid_number, x : x + grid_number] > opt				
+				img[y : y + grid_number, x : x + grid_number] = self.img[y : y + grid_number, x : x + grid_number] > opt
 				# print self.img[y : y + height, x : x + width]
 				x = x+grid_number
 
 		return img
 
 	def adaptive_overap(self, grid_size):
-		# Assumption is that the grid_size is odd positive integer. 
+		# Assumption is that the grid_size is odd positive integer.
 		# otherwise, we can't make the current pixel placed at the center of the patch.
 		if grid_size % 2 == 0:
 			print "Odd number required!"
@@ -170,7 +170,7 @@ class adaptive_otsu():
 
 if __name__=="__main__":
 	# ###### Test cases.
-    
+
 
 	# ######Regular otsu.
 	# regular_otsu = adaptive_otsu(camera())
@@ -189,14 +189,14 @@ if __name__=="__main__":
 
 	# ## adaptive otsu - non-overwrap
 	# ## ###############################
-	# ## For non-overwrap, the mask size is tested with 25, 30, 50. 
+	# ## For non-overwrap, the mask size is tested with 25, 30, 50.
 	# ## Some other mask size did not work because numpy libray complains
-	# ## about argmax. 
+	# ## about argmax.
 	# ################################
 	# plt.figure(2)
 	# non_overwrap = adaptive_otsu(page())
 	# start = time.time() # measuring time.
-	# non_img = non_overwrap.adaptive_none(25) 
+	# non_img = non_overwrap.adaptive_none(25)
 	# end = time.time() # measuring time.
 	# print "Otsu none overwrap method took : %s" % (end-start)
 	# plt.subplot(1,2,1)
@@ -205,8 +205,8 @@ if __name__=="__main__":
 	# plt.imshow(non_img, cmap=plt.cm.gray)
 
 	# ########################################
-	# ## overwrap otsu tested with mask size 11, 13, 21. 
-	# ## NOTE : ONLY odd square matrix is accepted in order to make current pixel 
+	# ## overwrap otsu tested with mask size 11, 13, 21.
+	# ## NOTE : ONLY odd square matrix is accepted in order to make current pixel
 	# ##        at the center of the mask.
 	# ######################################
 	# plt.figure(3)
@@ -224,7 +224,7 @@ if __name__=="__main__":
 	# img = imread("wiki.jpg")
 	# plt.figure(1)
 	# non_overwrap = adaptive_otsu(img)
-	# non_img = non_overwrap.adaptive_none(40) 
+	# non_img = non_overwrap.adaptive_none(40)
 	# plt.subplot(1,2,1)
 	# plt.imshow(img, cmap=plt.cm.gray)
 	# plt.subplot(1,2,2)
@@ -236,7 +236,7 @@ if __name__=="__main__":
 	end = time.time() # measuring time.
 	print "Otsu overwrap method took : %s" % (end-start)
 	plt.subplot(1,2,1)
-	plt.imshow(img, cmap=plt.cm.gray)
+	plt.imshow(imread("wiki.jpg"), cmap=plt.cm.gray)
 	plt.subplot(1,2,2)
 	plt.imshow(overwrap_img, cmap=plt.cm.gray)
 	plt.show()
