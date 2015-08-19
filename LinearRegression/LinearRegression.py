@@ -31,25 +31,47 @@ class Regressor():
         error = float(S)/N
         return error
 
-    def computeGeneralSSD(self, partial, yIntercept):
+    def computeGeneralSSD(self, weight):
         """
-        This computes SSD in higher dimension.
+        This computes SSD in higher dimension. Unlike 2-D case of SSD, this
+        function extends the dimension to general n-D case.
+        The linear function in higher dimension, it can be represented as
+        dot product of two vectors that have same dimension. So if we let
+        t, v are in R^n, then t * v makes sense. But as in 2-D case, the linear
+        function needs the y - intercept. So if we let t_0 = 1, then the original
+        vector t is in {1} cross R^{n-1}.
         """
+
         if self.data is None:
             print "No data!"
             return
+        # weight is {1, w_0, w_1, ...}
+        rowVector = None
+        try:
+            rowVector = self.data[0, :] # first row
+        except Exception as e:
+            print e
+            return
 
-        N = len(self.data[:, 0])
+        # assumption is that the last column correspond to the real value
+        # of each data. In 2-D case, this column is y component of (x,y).
+        if len(rowVector) - 1 != len(weight):
+            print "Dimension does not match!"
+            return
+
+
+        N = len(self.data[:, 0]) # number of data and each row is in R^n
         S = 0
         error = 0
         estimated = 0
         temp = None
+        y = 0
 
         for v in self.data:
-            temp = v[ : len(v) - 1]
-            estimated = np.add(np.dot(partial, temp), yIntercept)
-            S += (v[len(v) - 1] - estimated)**2
-        print S, N
+            temp = v[: len(v) - 1]
+            y = v[len(v) - 1]
+            estimated = np.dot(weight, temp)
+            S += (y - estimated)**2
         error = float(S)/N
         return error
 
