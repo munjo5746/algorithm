@@ -10,9 +10,17 @@ class Regressor():
         points with given slope and y-intercept. This will be our error function
         and the fomula is (1/N) Sum{y_i - (slope * x_i + b)**2}.
         """
+        # check if the data is None
         if self.data is None:
             print "No data!"
             return
+
+        # assumption is 2-D. check for dimension.
+        r,c = self.data.shape
+        if c != 2:
+            print "Dimension does not match!"
+            return
+
         N = len(self.data) # data will be assumed as set of pairs.[(x_0,y_0), ...]
         S = 0
         error = 0

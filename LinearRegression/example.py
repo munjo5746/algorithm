@@ -10,11 +10,12 @@ def generateData():
 
 if __name__ == "__main__":
     data = generateData()
-    # fig = plt.figure()
-    # axis = fig.add_subplot(1,1,1)
-    # axis.scatter(data[:,0], data[:,1], color="blue")
-    # plt.show()
+    instance = linear(data)
 
-    arr = np.array([[1,2,3], [3,4,5]])
-    ins = linear(arr)
-    ins.computeGeneralSSD(np.array([1,2]), np.array([3,4]))
+    error = 0
+    x = range(10)
+    y = range(10, 20)
+    for (slope, yInt) in zip(x,y):
+        error = instance.computeSSD(slope, yInt)
+        print "slope : %s, y-Int : %s, error : %s" %(slope, yInt, error)
+        error = 0
