@@ -72,6 +72,8 @@ class Regressor():
             y = v[len(v) - 1]
             estimated = np.dot(weight, temp)
             S += (y - estimated)**2
+            print v
+            print "estimated : %s" % estimated
         error = float(S)/N
         return error
 
@@ -84,8 +86,8 @@ class Regressor():
         respYIntercept = 0
         N = len(self.data)
         for (x,y) in self.data:
-            respSlope += (y - (slope * x + yIntercept)) * (-1 * x)
-            respYIntercept += (-1 * (y - (slope * x + yIntercept)))
+            respSlope += (y - (slope * x + yIntercept)) * (-1 * x) * (1.0/N)
+            respYIntercept += (-1 * (y - (slope * x + yIntercept))) * (1.0/N)
         newSlope = slope - (alpha * respSlope)
         newYIntercept = yIntercept - (alpha * respYIntercept)
         return (newSlope, newYIntercept)

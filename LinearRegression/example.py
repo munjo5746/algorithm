@@ -9,15 +9,20 @@ def generateData(dimension):
     return sampled.reshape((50,dimension))
 
 if __name__ == "__main__":
-    data = generateData()
+    data = generateData(2)
     instance = linear(data)
 
     error = 0
-    x = range(10)
-    y = range(10, 20)
+    x = [np.random.randint(0,10) for i in range(10)]
+    y = [np.random.randint(0,10) for i in range(10)]
     for (slope, yInt) in zip(x,y):
         error = instance.computeSSD(slope, yInt)
         print "slope : %s, y-Int : %s, error : %s" %(slope, yInt, error)
         error = 0
-
-    weight = np.array([1,2,3,4,5]) # actual vector is [2,3,4,5]
+    t1 = 0
+    t2 = 1
+    error = 0
+    for i in range(500):
+        t1, t2 = instance.computeMinError(t1, t2, 0.001)
+        error = instance.computeSSD(t1, t2)
+        print "w1 : %s, w2 : %s, error : %s" %(t1,t2,error)
